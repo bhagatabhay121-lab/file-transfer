@@ -2,154 +2,161 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy Policy - Free Invoice Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beam – send files between phone and iPad</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f5f7f6; --card:#fff; --text:#1c2321; --muted:#5b6866; --brand:#0b4f4a; --line:#dfe6e4; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#121615; --card:#1a1f1e; --text:#e8eeec; --muted:#9aa8a5; --brand:#6fd0c6; --line:#2b3432; }
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 -apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
-  main { max-width:780px; margin:0 auto; padding:24px 16px 60px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px; }
-  h1 { margin:0 0 4px; font-size:28px; color:var(--brand); }
-  h2 { margin:28px 0 8px; font-size:19px; color:var(--brand); }
-  p, li { color:var(--text); }
-  .muted { color:var(--muted); font-size:14px; }
-  ul { padding-left:22px; }
-  li { margin:4px 0; }
-  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:14.5px; }
-  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
-  th { color:var(--muted); font-weight:600; }
-  .table-wrap { overflow-x:auto; }
-  a { color:var(--brand); }
+:root{--bg:#f6f8fb;--surface:#fff;--ink:#0f1b2d;--muted:#5a6a80;--line:#d5dce6;--accent:#2a5bff;--accent-ink:#fff;--ok:#0e9f60;--err:#c62828;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0c1320;--surface:#141e30;--ink:#eaf0fa;--muted:#93a3ba;--line:#26344d;--accent:#6b8cff;--accent-ink:#0c1320;--ok:#3ccf91;--err:#ff7b72}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c1320;--surface:#141e30;--ink:#eaf0fa;--muted:#93a3ba;--line:#26344d;--accent:#6b8cff;--accent-ink:#0c1320;--ok:#3ccf91;--err:#ff7b72}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:560px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:44px;line-height:1;letter-spacing:-.03em;font-weight:800;margin:12px 0 6px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:44ch}
+.pair{display:flex;align-items:center;gap:10px;margin:0 0 22px}
+.dev{flex:0 0 auto;width:54px;height:54px;border:2px solid var(--line);border-radius:14px;display:grid;place-items:center;font-size:24px;background:var(--surface)}
+.link{flex:1;height:4px;border-radius:2px;background:var(--line);position:relative;overflow:hidden}
+.link i{position:absolute;inset:0;width:0;background:var(--accent);transition:width .6s}
+.pair.on .link i{width:100%}
+.pair.on .dev{border-color:var(--accent)}
+#state{font-weight:600;margin:-12px 0 20px;color:var(--muted)}
+#state.on{color:var(--ok)}
+section{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+h2{font-size:19px;margin:0 0 4px}
+p{margin:0 0 12px;color:var(--muted)}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+button,.btn{font:600 16px inherit;font-family:inherit;border:0;border-radius:12px;padding:12px 16px;background:var(--accent);color:var(--accent-ink);cursor:pointer;min-height:46px}
+button.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+button.alt.sel{border-color:var(--accent);color:var(--accent)}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button:disabled{opacity:.5}
+textarea{width:100%;height:92px;font:13px/1.35 ui-monospace,Menlo,monospace;border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);color:var(--ink);resize:vertical;margin-bottom:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.hide{display:none!important}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px 14px;text-align:center;margin-bottom:12px}
+ul{list-style:none;margin:0;padding:0}
+li{border-top:1px solid var(--line);padding:12px 0}
+li:first-child{border-top:0}
+.nm{display:flex;justify-content:space-between;gap:10px;font-weight:600;word-break:break-all}
+.meta{font-size:14px;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--line);margin:8px 0 4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent)}
+li.ok .bar i{background:var(--ok)}
+a.dl{color:var(--accent);font-weight:600}
+.err{color:var(--err);font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <main>
-<div class="card">
+<h1>Beam</h1>
+<p class="sub">Send files directly between your phone and iPad. Nothing is uploaded; files travel over your Wi‑Fi.</p>
+<div class="pair" id="pair"><div class="dev">📱</div><div class="link"><i></i></div><div class="dev">📲</div></div>
+<div id="state">Not connected</div>
 
-<h1>Privacy Policy</h1>
-<p class="muted"><strong>Free Invoice Generator</strong> (also shown inside the app as "Invoice Studio"; package name: com.abhay.invoice)<br>
-Effective date: 6 October 2026 &middot; Last updated: 6 October 2026</p>
+<section id="pairing">
+<h2>Connect two devices</h2>
+<p>Open this page on both devices (same Wi‑Fi). Pick a role on each.</p>
+<div class="tabs"><button class="alt" id="tHost">This device starts</button><button class="alt" id="tJoin">This device joins</button></div>
 
-<p>Free Invoice Generator ("the app", "we", "us") helps you create GST invoices and related documents (such as quotations, challans, proforma invoices and credit notes), keep a list of customers and products, export PDFs and GST reports, and email invoices and statements to your customers. This policy explains what information the app handles, where it goes, and the choices you have. We have tried to keep it short and honest.</p>
-
-<h2>1. The short version</h2>
-<ul>
-  <li>Your invoices, customers, products and business profile are saved <strong>on your phone</strong>, and <strong>a copy is also backed up to our cloud database (Google Firebase)</strong> once you have entered your name and accepted the Terms &amp; conditions. We can see this backed-up data.</li>
-  <li>We also collect usage information: your name, when you open the app, how long you use it, and a summary of your business and of the documents you create.</li>
-  <li>If you send us feedback from Settings, it is stored in the same database together with your name and the contact you choose to give.</li>
-  <li>When you email an invoice or statement, the email address, message and PDF are sent through our email service.</li>
-  <li>When you look up a GSTIN, the GSTIN and the CAPTCHA you type are sent to a GST portal search service to fetch the business's public details.</li>
-  <li><strong>You can ask us to delete your data at any time</strong> (see section 12).</li>
-  <li>We do not show ads, do not sell your data and do not share it for marketing.</li>
-</ul>
-
-<h2>2. Information stored on your device</h2>
-<p>The following is created by you and saved in the app's private storage on your phone:</p>
-<ul>
-  <li>Your business profile: business name, address, GSTIN, PAN, MSME number, phone, email, bank details, UPI ID, terms text, logo, signature and watermark</li>
-  <li>Customers (including their phone numbers and email addresses), products and the invoices and other documents you create, including numbers, items, amounts, payments, status and notes</li>
-  <li>App settings such as language, theme, default GST rate, Do Not Disturb preference and the sender name used for emails</li>
-</ul>
-<p>If you uninstall the app, clear its data or lose your phone, the copy on your phone is erased. The cloud backup described in section 3 stays with us until you ask us to delete it (section 12).</p>
-
-<h2>3. Cloud backup of your data</h2>
-<p>After you enter your name and accept the Terms &amp; conditions, the app automatically backs up your data to our Firebase Realtime Database. The backup is stored under a random install ID (see section 4) and includes:</p>
-<ul>
-  <li>Your business profile, including name, address, GSTIN, PAN, MSME number, phone, email, bank details, UPI ID, terms text, logo, signature and watermark image</li>
-  <li>Your product list</li>
-  <li>Your customers, including their names, addresses, GSTIN, phone numbers and email addresses</li>
-  <li>Every invoice and other document you create, with its items, amounts, payments, status and notes, and the next document numbers</li>
-</ul>
-<p>The app uploads only what changed, shortly after you make a change, when you leave the app, and it retries automatically if you were offline. When you delete a customer, product or document on your phone, its cloud copy is removed at the next backup. We use the backup to keep your data safe, to give you support when something goes wrong, and to understand and improve the app. It is not shown to other users of the app, and access to it is limited to the app's administrator.</p>
-<p><strong>Your customers' information:</strong> the names, phone numbers, email addresses and other details of your customers are information you enter yourself. By using the app you confirm that you are entitled to store and use that information, and you are responsible for complying with the laws that apply to it.</p>
-
-<h2>4. Usage information we collect</h2>
-<p>From the time you enter your name, the app sends the following to our Firebase Realtime Database:</p>
-<div class="table-wrap">
-<table>
-  <tr><th>Information</th><th>Why we collect it</th></tr>
-  <tr><td>The name you enter</td><td>To tell users apart when we review usage, give support and answer feedback or deletion requests</td></tr>
-  <tr><td>A random install ID generated by the app (it is not your device advertising ID, phone number or email)</td><td>To count how many people use the app without counting the same person twice, and to keep your backup separate from everyone else's</td></tr>
-  <tr><td>Install date, last-seen time, number of visits and total time the app was open, per day and in total</td><td>To measure daily and total users and how much the app is used</td></tr>
-  <tr><td>App version, phone platform (for example Android) and selected app language</td><td>To fix problems that affect particular versions or languages</td></tr>
-  <tr><td>A business summary: business name, GSTIN, city, state, phone and email from your profile, and counts of your documents, drafts, customers and products, the total amount billed and received, and the time of your last backup</td><td>To show the administrator a list of users without opening every invoice, and to support you</td></tr>
-  <tr><td>For each invoice or document you create or update: the date and time, whether it was created or updated, its type and number, and your UPI ID</td><td>To understand how the app is used</td></tr>
-</table>
+<div id="host" class="hide">
+<p><b>1.</b> Make a code, then send it to the other device (Messages, Notes, any chat).</p>
+<button id="mkOffer">Make code</button>
+<div id="hostCode" class="hide" style="margin-top:12px">
+<textarea id="offer" readonly aria-label="Your code"></textarea>
+<div class="row"><button class="alt" id="cpOffer">Copy code</button></div>
+<p style="margin-top:14px"><b>2.</b> Paste the reply code from the other device.</p>
+<textarea id="answerIn" placeholder="Paste reply code" aria-label="Reply code"></textarea>
+<button id="finish">Connect</button>
 </div>
-<p>We do <strong>not</strong> collect your location, your contacts list or your advertising ID.</p>
-
-<h2>5. Feedback you send</h2>
-<p>In Settings you can choose "Send feedback". The feedback you send is stored in our Firebase Realtime Database and includes: the type you pick (suggestion, problem, compliment or other), an optional star rating, your message, an optional phone number or email if you want a reply, your name, your install ID, the app version, your phone platform and app language, and the time. We use it only to improve the app and to reply to you. If you are offline, your feedback is kept on your phone and sent the next time the app opens. You can ask us to delete it at any time (section 12).</p>
-
-<h2>6. Messages and updates from us</h2>
-<p>The app checks our database when it opens, when you return to it, and about once a minute while it is open, to see whether a new version is available, whether the app is in maintenance, and whether there are messages for you (for example announcements or update notices). The administrator can also block an install from using the app. When a message is delivered to you or you open it, the app records the time together with your name and install ID, so we can tell whether the message reached you. Messages may contain a link; it opens in your phone's browser only when you tap it.</p>
-
-<h2>7. Sending invoices and statements by email</h2>
-<p>When you choose "Email PDF" or "Email statement", the app builds the PDF on your phone and sends the following to our email gateway, which hands it to our email delivery provider (Maileroo) to deliver:</p>
-<ul>
-  <li>The recipient email address(es) you enter or that are saved for the customer</li>
-  <li>The subject and message text</li>
-  <li>The PDF attachment. Depending on what you put in the document, it can include your business details (name, address, GSTIN, bank details, UPI ID, logo, signature), your customer's details, line items and amounts</li>
-  <li>Your business name or sender name (shown as the sender) and your profile email address, if you have saved one (set as the Reply-To address so that replies reach you)</li>
-</ul>
-<p>The email is sent from an address belonging to our email service, not from your own mailbox, and the recipient can see it. We do not keep a copy of the emails or PDFs in our own database. The gateway and the delivery provider process them in order to deliver them and may keep delivery logs under their own policies. This happens only when you choose to send an email. By using this feature you confirm that you are entitled to contact those customers and you are responsible for complying with the laws that apply to your messages.</p>
-
-<h2>8. GSTIN lookup</h2>
-<p>If you type a GSTIN when adding a customer, the app can fetch that business's public registration details (such as trade name, address and status). To do this, the app first requests a CAPTCHA image, and then the <strong>GSTIN and the CAPTCHA text you type</strong> are sent over the internet to a third-party GST portal search service (ExpressGST). Like any internet request, this also reveals your IP address to that service. The details returned are put into the customer form on your phone. This lookup only happens when you enter a GSTIN and choose to complete the CAPTCHA, and you can skip it and fill in the details manually. That service has its own privacy practices, which we do not control.</p>
-
-<h2>9. Permissions the app may ask for</h2>
-<ul>
-  <li><strong>Photos / files / camera:</strong> only when you choose to add a logo, signature or watermark image, either from your gallery or by taking a photo. The image is stored on your phone inside the app and is included in your cloud backup (section 3). If you add it to an invoice and then email it, the image is part of the PDF that is sent.</li>
-  <li><strong>Do Not Disturb access (optional):</strong> only if you turn on the "Do Not Disturb while the app is open" setting. It is used to switch Do Not Disturb on while the app is open and off when you leave. Nothing about this is sent to us.</li>
-  <li><strong>Internet:</strong> to back up your data and send usage information (sections 3 and 4), to send feedback (section 5), to check for updates and messages (section 6), to send emails (section 7) and to do the GSTIN lookup (section 8).</li>
-</ul>
-
-<h2>10. Exporting, printing and sharing</h2>
-<p>When you export, print or share an invoice, statement or GST report (PDF or Excel file), the file is created on your phone and handed to the app you choose (for example WhatsApp, email or a printer). In the same way, if you use "Backup" in the app to copy your data as text, that text stays on your phone until you paste it somewhere yourself. Once you share something, it is handled by that app and the person you send it to, under their rules. We do not receive a copy.</p>
-
-<h2>11. Who we share information with</h2>
-<p>We do not sell or rent your information. We use the following service providers, each only for the purpose described:</p>
-<ul>
-  <li><strong>Google Firebase</strong> &ndash; stores the cloud backup, usage information, feedback and messages in sections 3 to 6 (<a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy information</a>).</li>
-  <li><strong>Supabase</strong> &ndash; hosts the gateway that passes your emails to the delivery provider below.</li>
-  <li><strong>Maileroo</strong> &ndash; delivers the emails you send (section 7).</li>
-  <li><strong>ExpressGST</strong> &ndash; the third-party GST portal search service used for GSTIN lookup (section 8).</li>
-</ul>
-<p>We may also disclose information if the law requires it.</p>
-
-<h2>12. Your choices and rights, and deleting your data</h2>
-<ul>
-  <li><strong>Ask us to delete your data:</strong> you can request deletion at any time. In the app, go to Settings &rarr; Send feedback and write that you want your data deleted, or email us at the address below. Please include the name you entered in the app. We will delete your cloud backup, your usage information and your feedback, and tell you when it is done.</li>
-  <li><strong>Access or correction:</strong> email us with the name you entered and we will tell you what we hold about you and correct it where needed. Because the install ID is random and not linked to your phone number or email, we may need your name to find your record.</li>
-  <li><strong>Delete data on your phone:</strong> uninstall the app or clear its storage in your phone's Settings. This does <strong>not</strong> delete the cloud copy, so send us a deletion request as above if you want that removed too.</li>
-  <li><strong>Stop uploads:</strong> uninstalling the app stops all uploads.</li>
-  <li><strong>Emails:</strong> emails are sent only when you choose to send them.</li>
-  <li><strong>Customers who received an email:</strong> if you are a customer who received an email from a business using this app, please contact that business. You can also write to us and we will help where we can.</li>
-</ul>
-
-<h2>13. How long we keep information</h2>
-<p>Information on your phone stays until you delete it, clear the app's data or uninstall the app. The cloud backup, usage information and feedback in our database are kept while the app is in use and for as long as we need them to support you and to understand and improve the app, or until you ask us to delete them. We do not store the content of emails in our own database; the providers listed in section 11 keep delivery records for the periods set by their own policies.</p>
-
-<h2>14. Security</h2>
-<p>Information sent to Firebase, to our email gateway and to the GST service travels over encrypted (HTTPS) connections. Cloud data is stored under a random install ID, and reading it requires the administrator's sign-in. Data stored on your phone is protected by your phone's own security, such as its screen lock, so we recommend keeping one. Email is not end-to-end encrypted once it leaves the app, so please avoid putting sensitive information in message text. No system is completely secure, so we cannot guarantee absolute security.</p>
-
-<h2>15. Children's privacy</h2>
-<p>The app is a business tool and is not directed to children under 13 (or under 18 where the law of your country requires parental consent). We do not knowingly collect information from children. If you believe a child has given us a name, please contact us and we will delete it.</p>
-
-<h2>16. Changes to this policy</h2>
-<p>We may update this policy from time to time. When we do, we will change the "Last updated" date above and, for significant changes, show a notice in the app and ask you to accept the updated Terms &amp; conditions again. Continuing to use the app after a change means you accept the updated policy.</p>
-
-<h2>17. Contact us</h2>
-<p>Questions, requests or complaints about privacy, including requests to delete your data:</p>
-<p><strong>Free Invoice Generator</strong><br>
-Package name: com.abhay.invoice<br>
-Email: <a href="mailto:abhaybhagat170@gmail.com">abhaybhagat170@gmail.com</a></p>
-
 </div>
+
+<div id="join" class="hide">
+<p><b>1.</b> Paste the code from the other device.</p>
+<textarea id="offerIn" placeholder="Paste code" aria-label="Code from other device"></textarea>
+<button id="mkAnswer">Make reply code</button>
+<div id="joinCode" class="hide" style="margin-top:12px">
+<p><b>2.</b> Send this reply code back. Connection starts on its own.</p>
+<textarea id="answer" readonly aria-label="Your reply code"></textarea>
+<div class="row"><button class="alt" id="cpAnswer">Copy reply code</button></div>
+</div>
+</div>
+<div id="msg" class="err"></div>
+</section>
+
+<section id="xfer" class="hide">
+<h2>Send files</h2>
+<div class="drop"><p>Pick any files. Both devices can send at any time.</p>
+<button id="pick">Choose files</button><input id="file" type="file" multiple hidden></div>
+<ul id="list"></ul>
+</section>
 </main>
+<script>
+const $=id=>document.getElementById(id);
+const CH=16384;let pc,dc,incoming=null,queue=Promise.resolve();
+const b64=u=>{let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function pipe(bytes,Cls,mode){const s=new Blob([bytes]).stream().pipeThrough(new Cls(mode));return new Uint8Array(await new Response(s).arrayBuffer())}
+async function enc(o){const raw=new TextEncoder().encode(JSON.stringify(o));
+ if(window.CompressionStream){return '1'+b64(await pipe(raw,CompressionStream,'deflate-raw'))}
+ return '0'+b64(raw)}
+async function dec(t){t=t.replace(/\s+/g,'');const raw=unb64(t.slice(1));
+ const bytes=t[0]==='1'?await pipe(raw,DecompressionStream,'deflate-raw'):raw;
+ return JSON.parse(new TextDecoder().decode(bytes))}
+const err=m=>{$('msg').textContent=m||''};
+function state(t,on){$('state').textContent=t;$('state').className=on?'on':'';$('pair').classList.toggle('on',!!on)}
+function newPc(){pc=new RTCPeerConnection({iceServers:[]});
+ pc.onconnectionstatechange=()=>{const s=pc.connectionState;
+  if(s==='connected')state('Connected',true);
+  else if(s==='connecting')state('Connecting…');
+  else if(s==='failed'){state('Connection failed');err('Could not connect. Make sure both devices are on the same Wi‑Fi (not guest or cellular) and try again.')}
+  else if(s==='disconnected'||s==='closed')state('Disconnected')}}
+function gather(){return new Promise(r=>{if(pc.iceGatheringState==='complete')return r();
+ const t=setTimeout(r,4000);pc.addEventListener('icegatheringstatechange',()=>{if(pc.iceGatheringState==='complete'){clearTimeout(t);r()}})})}
+function setupDc(c){dc=c;dc.binaryType='arraybuffer';dc.bufferedAmountLowThreshold=1<<18;
+ dc.onopen=()=>{$('xfer').classList.remove('hide');$('pairing').classList.add('hide');state('Connected',true)};
+ dc.onmessage=onMsg}
+const show=r=>{$('host').classList.toggle('hide',r!=='host');$('join').classList.toggle('hide',r!=='join');
+ $('tHost').classList.toggle('sel',r==='host');$('tJoin').classList.toggle('sel',r==='join');err()};
+$('tHost').onclick=()=>show('host');$('tJoin').onclick=()=>show('join');
+async function copy(id,btn){const el=$(id);el.select();try{await navigator.clipboard.writeText(el.value)}catch(e){document.execCommand('copy')}
+ const o=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=o,1500)}
+$('cpOffer').onclick=e=>copy('offer',e.target);$('cpAnswer').onclick=e=>copy('answer',e.target);
+$('mkOffer').onclick=async()=>{try{err();newPc();setupDc(pc.createDataChannel('files'));
+ await pc.setLocalDescription(await pc.createOffer());state('Making code…');await gather();
+ $('offer').value=await enc(pc.localDescription);$('hostCode').classList.remove('hide');state('Waiting for reply code')}catch(e){err('Could not make a code: '+e.message)}};
+$('finish').onclick=async()=>{try{err();await pc.setRemoteDescription(await dec($('answerIn').value));state('Connecting…')}catch(e){err('That reply code is not valid. Copy the whole code and try again.')}};
+$('mkAnswer').onclick=async()=>{try{err();newPc();pc.ondatachannel=e=>setupDc(e.channel);
+ await pc.setRemoteDescription(await dec($('offerIn').value));await pc.setLocalDescription(await pc.createAnswer());
+ state('Making reply code…');await gather();$('answer').value=await enc(pc.localDescription);$('joinCode').classList.remove('hide');state('Waiting for the other device')}
+ catch(e){err('That code is not valid. Copy the whole code and try again.')}};
+
+const fmt=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':n<1073741824?(n/1048576).toFixed(1)+' MB':(n/1073741824).toFixed(2)+' GB';
+function row(name,size,dir){const li=document.createElement('li');
+ li.innerHTML='<div class="nm"><span></span><span class="meta"></span></div><div class="bar"><i></i></div><div class="meta st"></div>';
+ li.querySelector('.nm span').textContent=name;li.querySelector('.nm .meta').textContent=fmt(size);
+ li.querySelector('.st').textContent=dir==='out'?'Sending…':'Receiving…';$('list').prepend(li);return li}
+const prog=(li,f)=>li.querySelector('.bar i').style.width=(f*100)+'%';
+function onMsg(e){
+ if(typeof e.data==='string'){const m=JSON.parse(e.data);
+  if(m.t==='meta')incoming={name:m.name,size:m.size,mime:m.mime,parts:[],got:0,li:row(m.name,m.size,'in')};
+  else if(m.t==='end'&&incoming){const i=incoming;incoming=null;const url=URL.createObjectURL(new Blob(i.parts,{type:i.mime||'application/octet-stream'}));
+   prog(i.li,1);i.li.classList.add('ok');const st=i.li.querySelector('.st');st.textContent='Received. ';
+   const a=document.createElement('a');a.className='dl';a.href=url;a.download=i.name;a.textContent='Save file';st.appendChild(a)}
+  return}
+ if(incoming){incoming.parts.push(e.data);incoming.got+=e.data.byteLength;prog(incoming.li,incoming.got/incoming.size)}}
+async function send(f){const li=row(f.name,f.size,'out');
+ try{dc.send(JSON.stringify({t:'meta',name:f.name,size:f.size,mime:f.type}));let off=0;
+  while(off<f.size){if(dc.bufferedAmount>(1<<20))await new Promise(r=>{dc.onbufferedamountlow=()=>{dc.onbufferedamountlow=null;r()}});
+   const buf=await f.slice(off,off+CH).arrayBuffer();dc.send(buf);off+=buf.byteLength;prog(li,off/f.size)}
+  dc.send(JSON.stringify({t:'end'}));li.classList.add('ok');li.querySelector('.st').textContent='Sent'}
+ catch(e){li.querySelector('.st').innerHTML='<span class="err">Failed: connection lost</span>'}}
+$('pick').onclick=()=>$('file').click();
+$('file').onchange=e=>{[...e.target.files].forEach(f=>queue=queue.then(()=>send(f)));e.target.value=''};
+if(!window.RTCPeerConnection)err('This browser does not support direct transfer. Use Safari, Chrome, or Firefox.');
+</script>
 </body>
 </html>
