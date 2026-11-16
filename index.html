@@ -47,6 +47,11 @@ li:first-child{border-top:0}
 li.ok .bar i{background:var(--ok)}
 a.dl{color:var(--accent);font-weight:600}
 .err{color:var(--err);font-weight:600}
+.qr{display:block;width:min(100%,340px);margin:0 auto 12px;background:#fff;border-radius:12px;image-rendering:pixelated}
+#scanner{position:fixed;inset:0;z-index:50;background:#000;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+#scanner video{flex:1;min-height:0;width:100%;object-fit:cover}
+#scanner .bar2{padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));color:#fff;text-align:center;background:#000}
+#scanner .bar2 p{color:#cfd8e6;margin:0 0 10px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -67,24 +72,31 @@ a.dl{color:var(--accent);font-weight:600}
 <button id="mkOffer">Make code</button>
 <div id="hostCode" class="hide" style="margin-top:12px">
 <textarea id="offer" readonly aria-label="Your code"></textarea>
+<img id="qrOffer" class="qr hide" alt="QR code. Scan it with the other device.">
+<p>Scan this QR on the other device, or copy the code.</p>
 <div class="row"><button class="alt" id="cpOffer">Copy code</button></div>
 <p style="margin-top:14px"><b>2.</b> Paste the reply code from the other device.</p>
-<textarea id="answerIn" placeholder="Paste reply code" aria-label="Reply code"></textarea>
+<div class="row" style="margin-bottom:10px"><button id="scanReply">Scan reply QR</button></div>
+<textarea id="answerIn" placeholder="Or paste reply code" aria-label="Reply code"></textarea>
 <button id="finish">Connect</button>
 </div>
 </div>
 
 <div id="join" class="hide">
 <p><b>1.</b> Paste the code from the other device.</p>
-<textarea id="offerIn" placeholder="Paste code" aria-label="Code from other device"></textarea>
+<div class="row" style="margin-bottom:10px"><button id="scanOffer">Scan QR from other device</button></div>
+<textarea id="offerIn" placeholder="Or paste code" aria-label="Code from other device"></textarea>
 <button id="mkAnswer">Make reply code</button>
 <div id="joinCode" class="hide" style="margin-top:12px">
 <p><b>2.</b> Send this reply code back. Connection starts on its own.</p>
 <textarea id="answer" readonly aria-label="Your reply code"></textarea>
+<img id="qrAnswer" class="qr hide" alt="Reply QR code. Scan it with the first device.">
+<p>Scan this QR on the first device, or copy the reply code.</p>
 <div class="row"><button class="alt" id="cpAnswer">Copy reply code</button></div>
 </div>
 </div>
 <div id="msg" class="err"></div>
+<div id="scanner" class="hide"><video id="vid" playsinline muted></video><div class="bar2"><p>Point the camera at the QR code on the other screen. Turn its brightness up and hold steady.</p><button class="alt" id="stopScan" style="color:#fff;border-color:#fff">Cancel</button></div></div>
 </section>
 
 <section id="xfer" class="hide">
@@ -94,6 +106,8 @@ a.dl{color:var(--accent);font-weight:600}
 <ul id="list"></ul>
 </section>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const CH=16384;let pc,dc,incoming=null,queue=Promise.resolve();
@@ -127,13 +141,27 @@ async function copy(id,btn){const el=$(id);el.select();try{await navigator.clipb
 $('cpOffer').onclick=e=>copy('offer',e.target);$('cpAnswer').onclick=e=>copy('answer',e.target);
 $('mkOffer').onclick=async()=>{try{err();newPc();setupDc(pc.createDataChannel('files'));
  await pc.setLocalDescription(await pc.createOffer());state('Making code…');await gather();
- $('offer').value=await enc(pc.localDescription);$('hostCode').classList.remove('hide');state('Waiting for reply code')}catch(e){err('Could not make a code: '+e.message)}};
+ $('offer').value=await enc(pc.localDescription);drawQR('offer','qrOffer');$('hostCode').classList.remove('hide');state('Waiting for reply code')}catch(e){err('Could not make a code: '+e.message)}};
 $('finish').onclick=async()=>{try{err();await pc.setRemoteDescription(await dec($('answerIn').value));state('Connecting…')}catch(e){err('That reply code is not valid. Copy the whole code and try again.')}};
 $('mkAnswer').onclick=async()=>{try{err();newPc();pc.ondatachannel=e=>setupDc(e.channel);
  await pc.setRemoteDescription(await dec($('offerIn').value));await pc.setLocalDescription(await pc.createAnswer());
- state('Making reply code…');await gather();$('answer').value=await enc(pc.localDescription);$('joinCode').classList.remove('hide');state('Waiting for the other device')}
+ state('Making reply code…');await gather();$('answer').value=await enc(pc.localDescription);drawQR('answer','qrAnswer');$('joinCode').classList.remove('hide');state('Waiting for the other device')}
  catch(e){err('That code is not valid. Copy the whole code and try again.')}};
 
+function drawQR(src,img){const el=$(img);try{const q=qrcode(0,'L');q.addData($(src).value,'Byte');q.make();el.src=q.createDataURL(5,16);el.classList.remove('hide')}catch(e){el.classList.add('hide')}}
+let stream,raf;
+function stopScan(){cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$('scanner').classList.add('hide')}
+async function scan(onText){
+ if(!navigator.mediaDevices||!window.jsQR){err('Camera scanning is not available here. Paste the code instead.');return}
+ try{err();stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})}catch(e){err('Camera is blocked. Allow camera access in browser settings, or paste the code instead.');return}
+ const v=$('vid');v.srcObject=stream;await v.play();$('scanner').classList.remove('hide');
+ const c=document.createElement('canvas'),x=c.getContext('2d',{willReadFrequently:true});
+ const tick=()=>{if(!stream)return;if(v.videoWidth){const s=Math.min(1,1280/v.videoWidth);c.width=v.videoWidth*s;c.height=v.videoHeight*s;x.drawImage(v,0,0,c.width,c.height);
+  const d=x.getImageData(0,0,c.width,c.height),r=jsQR(d.data,c.width,c.height,{inversionAttempts:'attemptBoth'});
+  if(r&&r.data){stopScan();onText(r.data);return}}raf=requestAnimationFrame(tick)};tick()}
+$('stopScan').onclick=stopScan;
+$('scanOffer').onclick=()=>scan(t=>{$('offerIn').value=t;$('mkAnswer').click()});
+$('scanReply').onclick=()=>scan(t=>{$('answerIn').value=t;$('finish').click()});
 const fmt=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':n<1073741824?(n/1048576).toFixed(1)+' MB':(n/1073741824).toFixed(2)+' GB';
 function row(name,size,dir){const li=document.createElement('li');
  li.innerHTML='<div class="nm"><span></span><span class="meta"></span></div><div class="bar"><i></i></div><div class="meta st"></div>';
